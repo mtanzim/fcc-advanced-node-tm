@@ -18,6 +18,14 @@ const mongo = require('mongodb').MongoClient;
 const app = express();
 
 fccTesting(app); //For FCC testing purposes
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+      return next();
+  }
+  res.redirect('/');
+};
+
 app.set('view engine', 'pug');
 app.use('/public', express.static(process.cwd() + '/public'));
 app.use(bodyParser.json());
@@ -34,7 +42,12 @@ app.use(passport.session());
 
 app.route('/')
   .get((req, res) => {
-     res.render(process.cwd() +'/views/pug/index', {title:'Hello', message:'Please login!', showLogin: true});
+     res.render(process.cwd() +'/views/pug/index', {
+       title:'Hello', 
+       message:'Please login!', 
+       showLogin: true,
+       
+     });
   });
 
 
@@ -60,6 +73,14 @@ app.route('/login')
       });
     })(req, res, next);
 });
+
+
+app.route('/profile')
+  .get(ensureAuthenticated, (req,res) => {
+       res.render(process.cwd() + '/views/pug/profile',{
+         username: req.user.username,
+       });
+  });
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
