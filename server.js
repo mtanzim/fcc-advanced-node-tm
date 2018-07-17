@@ -12,7 +12,7 @@ const ObjectID = require('mongodb').ObjectID;
 const mongo = require('mongodb').MongoClient;
 
 // const userid = ObjectID();
-const user = {_id:ObjectID()};
+// const user = {_id:ObjectID()};
 
 
 const app = express();
@@ -38,14 +38,29 @@ app.route('/')
   });
 
 app.route('/login')
-  .post( (req,res) => {
+  .post( (req,res, next) => {
     console.log('posting');
-    passport.authenticate('local', { 
-      successRedirect: '/',                                              
-      failureRedirect: '/',
-    });
+    console.log(req.body);
+    passport.authenticate('local', function (err, user, info) {
+      if (err) return next(err);
+      if (!user) return next(info);
+      req.login(user, function (err) {
+        if (err) return next(err);
+        return res.json(user);
+      });
+    })(req, res, next);
 });
 
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+  var error = new Error('Not found!');
+  next(error);
+});
+
+//provide err argument before req to tell Express it's an error handling function
+app.use((err, req, res, next) => {
+  res.status(500).send(`Error found: ${err.message}`);
+})
 
 
 mongo.connect(process.env.DATABASE, (err, db) => {
@@ -68,15 +83,18 @@ mongo.connect(process.env.DATABASE, (err, db) => {
       );
     })
     
-    passport.use('local', new LocalStrategy(
+    passport.use(new LocalStrategy(
+      
       function(username, password, done) {
-        db.collection('users').findOne({ username: username }, function (err, user) {
+        console.log('came to passport');
+        // db.collection('users').findOne({ username: username }, function (err, user) {
           console.log('User '+ username +' attempted to log in.');
-          if (err) { return done(err); }
-          if (!user) { return done(null, false); }
-          if (password !== user.password) { return done(null, false); }
-          return done(null, user);
-        });
+          return (null, false, {message:'hiji'});
+          // if (err) { return done(err); }
+          // if (!user) { return done(null, false); }
+          // if (password !== user.password) { return done(null, false); }
+          // return done(null, user);
+        // });
       }
     ));
     
@@ -85,7 +103,7 @@ mongo.connect(process.env.DATABASE, (err, db) => {
       console.log("Listening on port " + process.env.PORT);
     });
 
-}
+  }
 });
 
 
