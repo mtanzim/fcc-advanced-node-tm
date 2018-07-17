@@ -23,6 +23,7 @@ app.use(session({
 }));
 
 app.use(passport.initialize());
+app.use(passport.session());
 
 app.route('/')
   .get((req, res) => {
