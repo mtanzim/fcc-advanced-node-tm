@@ -37,17 +37,26 @@ app.route('/')
      res.render(process.cwd() +'/views/pug/index', {title:'Hello', message:'Please login!', showLogin: true});
   });
 
+
+// app.post('/login',
+//   passport.authenticate('local', { successRedirect: '/',
+//                                    failureRedirect: '/',
+//                                  })
+// );
+
 app.route('/login')
   .post( (req,res, next) => {
-    console.log('posting');
-    console.log(req.body);
+    // console.log('posting');
+    // console.log(req.body);
     passport.authenticate('local', function (err, user, info) {
       // return res.redirect('/');
       if (err) return next(err);
-      if (!user) return next(new Error(info.message));
+      // if (!user) return next(new Error(info));
+      if (!user) return res.redirect('/');
       req.login(user, function (err) {
         if (err) return next(err);
-        return res.json(user);
+        return res.redirect('/');
+        // return res.json(user);
       });
     })(req, res, next);
 });
@@ -89,7 +98,7 @@ mongo.connect(process.env.DATABASE, (err, db) => {
       function(username, password, done) {
         // console.log('came to passport');
         console.log('User '+ username +' attempted to log in.');
-        return done(null, false, {message:'test'});
+        return done(null, false, 'fake user');
         // db.collection('users').findOne({ username: username }, function (err, user) {
           // if (err) { return done(err); }
           // if (!user) { return done(null, false); }
