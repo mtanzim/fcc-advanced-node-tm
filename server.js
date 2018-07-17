@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.route('/')
   .get((req, res) => {
     // res.sendFile(process.cwd() + '/views/index.html');
-     res.render(process.cwd() +'/views/pug/index');
+     res.render(process.cwd() +'/views/pug/index', {title:'Hello', message:'Please log in!'});
   });
 
 app.listen(process.env.PORT || 3000, () => {
