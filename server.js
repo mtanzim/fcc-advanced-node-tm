@@ -34,14 +34,15 @@ app.use(passport.session());
 
 app.route('/')
   .get((req, res) => {
-    // res.sendFile(process.cwd() + '/views/index.html');
      res.render(process.cwd() +'/views/pug/index', {title:'Hello', message:'Please login!', showLogin: true});
   });
+
 app.route('/login')
   .post( (req,res) => {
+    console.log('posting');
     passport.authenticate('local', { 
       successRedirect: '/',                                              
-      failureRedirect: '/login',
+      failureRedirect: '/',
     });
 });
 
@@ -67,7 +68,7 @@ mongo.connect(process.env.DATABASE, (err, db) => {
       );
     })
     
-    passport.use(new LocalStrategy(
+    passport.use('local', new LocalStrategy(
       function(username, password, done) {
         db.collection('users').findOne({ username: username }, function (err, user) {
           console.log('User '+ username +' attempted to log in.');
