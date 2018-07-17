@@ -49,13 +49,12 @@ mongo.connect(process.env.DATABASE, (err, db) => {
      });
 
     passport.deserializeUser((id, done) => {
-      done(null,null);
-      // db.collection('users').findOne(
-      //     {_id: new ObjectID(id)},
-      //     (err, doc) => {
-      //         done(null, doc);
-      //     }
-      // );
+      db.collection('users').findOne(
+          {_id: new ObjectID(id)},
+          (err, doc) => {
+              done(null, doc);
+          }
+      );
     })
     
     //serialization and app.listen
