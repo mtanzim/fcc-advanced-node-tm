@@ -35,8 +35,16 @@ app.use(passport.session());
 app.route('/')
   .get((req, res) => {
     // res.sendFile(process.cwd() + '/views/index.html');
-     res.render(process.cwd() +'/views/pug/index', {title:'Hello', message:'Please login!'});
+     res.render(process.cwd() +'/views/pug/index', {title:'Hello', message:'Please login!', showLogin: true});
   });
+app.route('/login')
+  .post( (req,res) => {
+    passport.authenticate('local', { 
+      successRedirect: '/',                                              
+      failureRedirect: '/login',
+    });
+});
+
 
 
 mongo.connect(process.env.DATABASE, (err, db) => {
