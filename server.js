@@ -42,8 +42,9 @@ app.route('/login')
     console.log('posting');
     console.log(req.body);
     passport.authenticate('local', function (err, user, info) {
+      // return res.redirect('/');
       if (err) return next(err);
-      if (!user) return next(info);
+      if (!user) return next(new Error(info.message));
       req.login(user, function (err) {
         if (err) return next(err);
         return res.json(user);
@@ -86,10 +87,10 @@ mongo.connect(process.env.DATABASE, (err, db) => {
     passport.use(new LocalStrategy(
       
       function(username, password, done) {
-        console.log('came to passport');
+        // console.log('came to passport');
+        console.log('User '+ username +' attempted to log in.');
+        return done(null, false, {message:'test'});
         // db.collection('users').findOne({ username: username }, function (err, user) {
-          console.log('User '+ username +' attempted to log in.');
-          return (null, false, {message:'hiji'});
           // if (err) { return done(err); }
           // if (!user) { return done(null, false); }
           // if (password !== user.password) { return done(null, false); }
