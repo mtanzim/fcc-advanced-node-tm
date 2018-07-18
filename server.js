@@ -1,5 +1,7 @@
 'use strict';
 
+require('dotenv').load();
+
 const express     = require('express');
 const bodyParser  = require('body-parser');
 const fccTesting  = require('./freeCodeCamp/fcctesting.js');
@@ -112,7 +114,7 @@ mongo.connect(process.env.DATABASE, (err, db) => {
               done(null, doc);
           }
       );
-    })
+    });
     
     passport.use(new LocalStrategy(
       

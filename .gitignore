@@ -1,1 +1,6 @@
 shrinkwrap.yaml
+.bashrc
+.env
+.profile
+node_modules/
+package-lock.json
