@@ -1,4 +1,4 @@
-# Freecode Advance Node Challenges
+# Freecode Advanced Node Challenges
 
 ## Introduction
 
@@ -17,3 +17,4 @@ Topics covered are:
 - Using MongoDB driver without Mongoose
   - Note the usage of ObjectID function from MongoDB to convert string to ObjectID type
 - Code flow when setting up databse, passport, and routing with Express/Node
+- Using modules to split up code
