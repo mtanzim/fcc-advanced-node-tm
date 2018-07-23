@@ -1,4 +1,4 @@
-# Freecode Advanced Node Challenges
+# Freecodecamp Advanced Node Challenges
 
 ## Introduction
 
@@ -9,6 +9,7 @@ Topics covered are:
 - Express
   - Routing
   - Integration with PassportJS
+- MongoDB
 
 # Lessons Learned
 
