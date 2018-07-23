@@ -11,7 +11,7 @@ Topics covered are:
   - Integration with PassportJS
 - MongoDB
 
-# Lessons Learned
+## Lessons Learned
 
 - Concept of serializing and deserializing users in Passport JS
   - Inspect deserialize function carefully in Passport
