@@ -69,7 +69,7 @@ mongo.connect(process.env.DATABASE, { useNewUrlParser: true }, (err, client) => 
 
     //serialization and app.listen
     app.listen(process.env.PORT || 3000, () => {
-      // console.log("Listening on port " + process.env.PORT);
+      console.log("Listening on port " + process.env.PORT);
     });
 
   }

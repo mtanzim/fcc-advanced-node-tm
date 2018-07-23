@@ -4,8 +4,6 @@ const LocalStrategy = require('passport-local');
 const ObjectID = require('mongodb').ObjectID;
 
 const bcrypt = require('bcrypt');
-const saltRounds = 12;
-
 module.exports = function (app, db) {
   passport.serializeUser((user, done) => {
     // console.log(`Serializaing ${user._id}`);
