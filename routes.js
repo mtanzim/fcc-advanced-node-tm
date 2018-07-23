@@ -1,6 +1,8 @@
 
 const passport = require('passport');
 // const express = require('express');
+const bcrypt = require('bcrypt');
+const saltRounds = 12;
 
 module.exports = function (app, db) {
 
